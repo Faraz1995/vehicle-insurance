@@ -8,6 +8,7 @@ type FloatingInputProps = {
   inputMode?: React.HTMLAttributes<HTMLInputElement>['inputMode']
   label: string
   placeholder?: string
+  extraClassnames?: string
   maxLength?: number
 }
 
@@ -18,6 +19,7 @@ export const FloatingInput = ({
   inputMode = 'text',
   label,
   placeholder = '',
+  extraClassnames = '',
   maxLength
 }: FloatingInputProps) => {
   const [isFocused, setIsFocused] = React.useState(false)
@@ -51,6 +53,7 @@ export const FloatingInput = ({
         placeholder={shouldFloat ? placeholder : ''}
         className={cn(
           'w-full border rounded-md px-3 pt-3 pb-1 outline-none transition focus: border-base-primary focus:ring-2 focus:ring-base-primary',
+          extraClassnames,
           disabled ? 'bg-gray-100 cursor-not-allowed' : 'bg-white'
         )}
       />
