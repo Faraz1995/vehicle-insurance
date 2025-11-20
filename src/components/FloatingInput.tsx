@@ -1,4 +1,4 @@
-import React from 'react'
+import { useState } from 'react'
 import { cn } from '../utils'
 
 type FloatingInputProps = {
@@ -6,23 +6,40 @@ type FloatingInputProps = {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
   disabled?: boolean
   inputMode?: React.HTMLAttributes<HTMLInputElement>['inputMode']
-  label: string
+  label?: string
   placeholder?: string
   extraClassnames?: string
   maxLength?: number
+  plateMaskHandler?: (raw: string) => string
 }
 
 export const FloatingInput = ({
   value,
   onChange,
-  disabled = false,
-  inputMode = 'text',
-  label,
-  placeholder = '',
-  extraClassnames = '',
-  maxLength
+
+  ...props
 }: FloatingInputProps) => {
-  const [isFocused, setIsFocused] = React.useState(false)
+  const [isFocused, setIsFocused] = useState(false)
+  const {
+    label,
+    placeholder,
+    disabled,
+    extraClassnames,
+    maxLength,
+    inputMode,
+    plateMaskHandler
+  } = props
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let newValue = e.target.value
+
+    if (plateMaskHandler) {
+      const raw = newValue.replace(/-/g, '')
+      newValue = plateMaskHandler(raw)
+    }
+
+    onChange({ ...e, target: { ...e.target, value: newValue } })
+  }
 
   const shouldFloat = isFocused || value.length > 0
 
@@ -40,11 +57,10 @@ export const FloatingInput = ({
         {label}
       </label>
 
-      {/* Input */}
       <input
         type='text'
         value={value}
-        onChange={onChange}
+        onChange={handleChange}
         onFocus={() => setIsFocused(true)}
         onBlur={() => setIsFocused(false)}
         disabled={disabled}
