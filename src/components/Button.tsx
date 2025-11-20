@@ -19,7 +19,7 @@ const Button = ({
   return (
     <button
       className={cn(
-        'bg-purple-500 hover:bg-purple-600 text-white px-8 py-3 rounded-xl font-medium transition-colors duration-200 shadow-lg hover:shadow-xl cursor-pointer',
+        'bg-yellow-500 hover:bg-yellow-600 text-white px-8 py-3 rounded-xl font-medium transition-colors duration-200 shadow-lg hover:shadow-xl cursor-pointer',
         disabled || loading
           ? 'opacity-50 cursor-not-allowed bg-slate-400 hover:bg-slate-400'
           : '',
