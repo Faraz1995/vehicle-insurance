@@ -2,17 +2,34 @@ import { useState } from 'react'
 import Button from './components/Button'
 import { PlateInputs } from './components/PlateInput'
 import axiosInstance from './utils/axios'
+import type { CarInfo } from './utils/types'
+import CarInfoCard from './components/CarInfo'
 
 function App() {
   const [plate, setPlate] = useState<string>('')
   const [isLoading, setIsLoading] = useState(false)
+  const [res, setRes] = useState<CarInfo | null>(null)
 
-  const searchHandler = () => {
+  const searchHandler = async () => {
     setIsLoading(true)
-    axiosInstance.get(`/api/inquiry/plate/${plate}`).then((res) => {
-      console.log(res)
+    try {
+      const res = await axiosInstance.get(`/api/inquiry/plate/${plate}`)
+      setRes(res.data)
       setIsLoading(false)
-    })
+      setPlate('')
+      const prevSearched = localStorage.getItem('oldPlateSearched')
+      if (prevSearched) {
+        localStorage.setItem(
+          'oldPlateSearched',
+          JSON.stringify([...JSON.parse(prevSearched), res.data])
+        )
+      } else {
+        localStorage.setItem('oldPlateSearched', JSON.stringify([res.data]))
+      }
+    } catch (e) {
+      console.log(e)
+      setIsLoading(false)
+    }
   }
 
   return (
@@ -29,6 +46,13 @@ function App() {
         <Button loading={isLoading} disabled={!plate} onClick={searchHandler}>
           <p>جستجو</p>
         </Button>
+      </div>
+      <div>
+        {res && Object.keys(res).length > 0 ? (
+          <CarInfoCard item={res} />
+        ) : (
+          <p>خودرویی با این پلاک یافت نشد</p>
+        )}
       </div>
     </div>
   )

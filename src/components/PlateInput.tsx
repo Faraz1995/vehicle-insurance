@@ -24,7 +24,7 @@ export const PlateInputs = ({
 
   // helper to update combined value
   const updateCombined = (p1: string, p2: string, p3: string, p4: string) => {
-    const combined = `${p1}${p2}${p3}${p4}`
+    const combined = `${p1}${p2}${p3}-${p4}`
     onChange(combined)
   }
 

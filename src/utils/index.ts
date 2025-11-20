@@ -31,3 +31,32 @@ export const plateMaskHander = (raw: string) => {
 
   return value
 }
+
+export const toJalali = (
+  date: string | Date | number,
+  format: 'text' | 'numeric' = 'text'
+): string => {
+  const options: Intl.DateTimeFormatOptions =
+    format === 'text'
+      ? { year: 'numeric', month: 'long' }
+      : { year: 'numeric', month: '2-digit' }
+
+  return new Intl.DateTimeFormat('fa-IR-u-ca-persian', options).format(new Date(date))
+}
+
+export const plateParser = (input: string): (number | string)[] => {
+  const result: (number | string)[] = []
+
+  // Match sequences of digits or non-digits
+  const parts = input.match(/\d+|[^\d]+/g)
+
+  if (parts) {
+    for (const part of parts) {
+      // if (part !== '-') {
+      result.push(part)
+      // }
+    }
+  }
+
+  return result
+}
