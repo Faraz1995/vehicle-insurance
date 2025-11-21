@@ -7,7 +7,7 @@ import CarInfoCard from './components/CarInfo'
 import { convertToEnglishNumber } from './utils'
 import CarInfoCardSkeleton from './components/CardInfoSkeleton'
 import toast from 'react-hot-toast'
-import Modal from './components/Modal'
+import HistoryModal from './components/HistoryModal'
 
 const pattern = /^\d{2}[\u0600-\u06FF]\d{3}-\d{2}$/
 
@@ -29,14 +29,21 @@ function App() {
       setRes(res.data)
       setIsLoading(false)
       setPlate('')
-      const prevSearched = localStorage.getItem('oldPlateSearched')
-      if (prevSearched) {
-        localStorage.setItem(
-          'oldPlateSearched',
-          JSON.stringify([...JSON.parse(prevSearched), res.data])
-        )
-      } else {
-        localStorage.setItem('oldPlateSearched', JSON.stringify([res.data]))
+      if (Object.keys(res.data).length > 0) {
+        const prevSearched = localStorage.getItem('oldPlateSearched')
+        if (prevSearched) {
+          const prevSearchedData: CarInfo[] = JSON.parse(prevSearched)
+          const exists = prevSearchedData.some((item) => item.plate === plate)
+          console.log('existsss', exists)
+          if (!exists) {
+            localStorage.setItem(
+              'oldPlateSearched',
+              JSON.stringify([...JSON.parse(prevSearched), res.data])
+            )
+          }
+        } else {
+          localStorage.setItem('oldPlateSearched', JSON.stringify([res.data]))
+        }
       }
     } catch (e) {
       console.log(e)
@@ -83,13 +90,7 @@ function App() {
         </div>
       )}
       {isLoading && <CarInfoCardSkeleton />}
-      {showHistoryModal && (
-        <Modal title='مشاهده تاریخچه جستجو' closeModal={() => setShowHistoryModal(false)}>
-          <div className='flex flex-col gap-4'>
-            <p>faraz</p>
-          </div>
-        </Modal>
-      )}
+      {showHistoryModal && <HistoryModal closeModal={() => setShowHistoryModal(false)} />}
     </div>
   )
 }
