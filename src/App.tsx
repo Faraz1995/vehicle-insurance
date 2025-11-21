@@ -37,7 +37,7 @@ function App() {
 
   return (
     <div className='flex flex-col p-4 gap-4 w-full h-full items-center justify-center border border-amber-500'>
-      <div className='flex items-center gap-2'>
+      <div className='flex flex-col sm:flex-row items-center gap-2'>
         <div className='max-w-md'>
           <PlateInputs
             value={plate}
@@ -46,7 +46,12 @@ function App() {
             }}
           />
         </div>
-        <Button loading={isLoading} disabled={!plate} onClick={searchHandler}>
+        <Button
+          loading={isLoading}
+          disabled={!plate}
+          onClick={searchHandler}
+          extraClassnames='w-full sm:w-auto'
+        >
           <p>جستجو</p>
         </Button>
       </div>

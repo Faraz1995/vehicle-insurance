@@ -2,7 +2,7 @@ import React from 'react'
 
 const CarInfoCardSkeleton: React.FC = () => {
   return (
-    <div className='w-full max-w-md mx-auto bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden min-w-lg animate-pulse'>
+    <div className='w-full max-w-md mx-auto bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden min-w-80  sm:min-w-lg animate-pulse'>
       <div className='p-6 space-y-5 w-full'>
         {/* Plate */}
         <div className='flex items-center justify-between'>
