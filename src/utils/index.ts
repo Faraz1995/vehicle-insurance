@@ -127,5 +127,5 @@ export const calculateInsuraceQuote = (makeYear: string | Date) => {
   for (let i = 0; i < yearDifference; i++) {
     finalPrice = finalPrice * (1 + increasedRate)
   }
-  return Math.round(finalPrice)
+  return Math.round(finalPrice / 1000) * 1000
 }
