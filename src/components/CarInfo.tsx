@@ -1,6 +1,6 @@
 import React from 'react'
 import type { CarInfo } from '../utils/types'
-import { plateParser, toJalali } from '../utils'
+import { calculateInsuraceQuote, plateParser, toJalali } from '../utils'
 
 type CarInfoCardProps = {
   item: CarInfo
@@ -47,6 +47,13 @@ const CarInfoCard: React.FC<CarInfoCardProps> = ({ item }) => {
           <span className='text-gray-400 font-medium'>کد ملی</span>
           <span className='font-mono text-lg' dir='ltr'>
             {item.owner.national_id}
+          </span>
+        </div>
+
+        <div className='flex items-center justify-between pt-4'>
+          <span className='text-gray-400 font-medium'> قیمت بیمه سالیانه</span>
+          <span className='font-mono text-lg' dir='ltr'>
+            {calculateInsuraceQuote(item.make_date)}
           </span>
         </div>
       </div>

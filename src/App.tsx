@@ -4,6 +4,7 @@ import { PlateInputs } from './components/PlateInput'
 import axiosInstance from './utils/axios'
 import type { CarInfo } from './utils/types'
 import CarInfoCard from './components/CarInfo'
+import { convertToEnglishNumber } from './utils'
 
 function App() {
   const [plate, setPlate] = useState<string>('')
@@ -13,7 +14,8 @@ function App() {
   const searchHandler = async () => {
     setIsLoading(true)
     try {
-      const res = await axiosInstance.get(`/api/inquiry/plate/${plate}`)
+      const formattedNumPlate = convertToEnglishNumber(plate)
+      const res = await axiosInstance.get(`/api/inquiry/plate/${formattedNumPlate}`)
       setRes(res.data)
       setIsLoading(false)
       setPlate('')
