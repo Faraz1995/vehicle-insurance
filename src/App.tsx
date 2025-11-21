@@ -4,7 +4,7 @@ import { PlateInputs } from './components/PlateInput'
 import axiosInstance from './utils/axios'
 import type { CarInfo } from './utils/types'
 import CarInfoCard from './components/CarInfo'
-import { convertToEnglishNumber } from './utils'
+import { convertToEnglishNumber, getDataFromLS } from './utils'
 import CarInfoCardSkeleton from './components/CardInfoSkeleton'
 import toast from 'react-hot-toast'
 import HistoryModal from './components/HistoryModal'
@@ -52,14 +52,18 @@ function App() {
     }
   }
 
+  const historyData: CarInfo[] = getDataFromLS('oldPlateSearched')
+
   return (
     <div className='flex flex-col p-4 gap-4 w-full h-full items-center justify-center border border-amber-500'>
-      <div
-        className='w-full flex justify-end cursor-pointer'
-        onClick={() => setShowHistoryModal(true)}
-      >
-        <p className='text-sm font-bold text-blue-400'>مشاهده تاریخچه جستجو</p>
-      </div>
+      {historyData.length > 0 && (
+        <div
+          className='w-full flex justify-end cursor-pointer'
+          onClick={() => setShowHistoryModal(true)}
+        >
+          <p className='text-sm font-bold text-blue-400'>مشاهده تاریخچه جستجو</p>
+        </div>
+      )}
       <div className='flex flex-col sm:flex-row items-center gap-2'>
         <div className='max-w-md'>
           <PlateInputs

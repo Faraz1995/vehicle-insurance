@@ -1,4 +1,4 @@
-import React from 'react'
+import { useState } from 'react'
 import Modal from './Modal'
 import { getDataFromLS } from '../utils'
 import type { CarInfo } from '../utils/types'
@@ -9,12 +9,30 @@ type Props = {
 }
 
 const HistoryModal = ({ closeModal }: Props) => {
-  const historyData: CarInfo[] = getDataFromLS('oldPlateSearched')
+  const [historyInfo, setHistoryInfo] = useState<CarInfo[]>(() =>
+    getDataFromLS('oldPlateSearched')
+  )
+
+  const handleDelete = (plate: string) => {
+    const newHistory = historyInfo.filter((h) => h.plate !== plate)
+    localStorage.setItem('oldPlateSearched', JSON.stringify(newHistory))
+    setHistoryInfo(newHistory)
+
+    if (newHistory.length === 0) {
+      closeModal()
+    }
+  }
+
   return (
     <Modal title='مشاهده تاریخچه جستجو' closeModal={closeModal}>
       <div className='flex flex-col gap-4'>
-        {historyData.map((item) => (
-          <CarInfoCard key={item.plate} item={item} />
+        {historyInfo.map((item) => (
+          <CarInfoCard
+            key={item.plate}
+            item={item}
+            canDeleted={true}
+            onDelete={handleDelete}
+          />
         ))}
       </div>
     </Modal>
