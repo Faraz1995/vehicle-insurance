@@ -8,13 +8,18 @@ import { convertToEnglishNumber } from './utils'
 import CarInfoCardSkeleton from './components/CardInfoSkeleton'
 import toast from 'react-hot-toast'
 
+const pattern = /^\d{2}[\u0600-\u06FF]\d{3}-\d{2}$/
+
 function App() {
   const [plate, setPlate] = useState<string>('')
   const [isLoading, setIsLoading] = useState(false)
   const [res, setRes] = useState<CarInfo | null>(null)
 
+  const isValid = pattern.test(plate)
+
   const searchHandler = async () => {
     setIsLoading(true)
+    setRes(null)
     try {
       const formattedNumPlate = convertToEnglishNumber(plate)
       const res = await axiosInstance.get(`/api/inquiry/plate/${formattedNumPlate}`)
@@ -50,7 +55,7 @@ function App() {
         </div>
         <Button
           loading={isLoading}
-          disabled={!plate}
+          disabled={!isValid}
           onClick={searchHandler}
           extraClassnames='w-full sm:w-auto'
         >
