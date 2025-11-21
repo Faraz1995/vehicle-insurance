@@ -77,13 +77,16 @@ the server will be running on port 3000
 npm run test
 ```
 
----
+## Improvements
 
-## 📝 Usage
+- Render a real plate-style input UI
+  Display the plate in a visual layout similar to an actual Iranian license plate, with sections, colors, and optional flag/emblem images.
 
-1.
+- Add a tooltip explaining insurance quote calculation
+  Show a small info tooltip describing how the final insurance price is computed (year difference, base price, multipliers, etc.).
 
----
+- Backend validation for invalid plate formats
+  Improve the Mockoon backend to return 400 Bad Request when the user submits an invalid plate number or incomplete data.---
 
 ## 📝 License
 
