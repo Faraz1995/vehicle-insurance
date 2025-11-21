@@ -6,6 +6,7 @@ import type { CarInfo } from './utils/types'
 import CarInfoCard from './components/CarInfo'
 import { convertToEnglishNumber } from './utils'
 import CarInfoCardSkeleton from './components/CardInfoSkeleton'
+import toast from 'react-hot-toast'
 
 function App() {
   const [plate, setPlate] = useState<string>('')
@@ -32,6 +33,7 @@ function App() {
     } catch (e) {
       console.log(e)
       setIsLoading(false)
+      toast.error('خطا در استعلام پلاک')
     }
   }
 
