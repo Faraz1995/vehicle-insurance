@@ -15,25 +15,25 @@ const CarInfoCardSkeleton: React.FC = () => {
         </div>
 
         {/* Brand */}
-        <div className='flex items-center justify-between'>
+        <div className='flex items-center justify-between pt-4'>
           <span className='bg-gray-200 rounded w-16 h-4'></span>
           <span className='bg-gray-200 rounded w-24 h-4'></span>
         </div>
 
         {/* Model */}
-        <div className='flex items-center justify-between'>
+        <div className='flex items-center justify-between pt-4'>
           <span className='bg-gray-200 rounded w-16 h-4'></span>
           <span className='bg-gray-200 rounded w-24 h-4'></span>
         </div>
 
         {/* Make Date */}
-        <div className='flex items-center justify-between'>
+        <div className='flex items-center justify-between pt-4'>
           <span className='bg-gray-200 rounded w-20 h-4'></span>
           <span className='bg-gray-200 rounded w-24 h-4'></span>
         </div>
 
         {/* Owner Name */}
-        <div className='flex items-center justify-between'>
+        <div className='flex items-center justify-between pt-4'>
           <span className='bg-gray-200 rounded w-20 h-4'></span>
           <span className='bg-gray-200 rounded w-32 h-4'></span>
         </div>

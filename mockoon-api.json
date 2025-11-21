@@ -1,0 +1,178 @@
+{
+  "uuid": "28bad489-dcde-4f44-9ef2-5ec9bb93f2fc",
+  "lastMigration": 33,
+  "name": "Demo API",
+  "endpointPrefix": "",
+  "latency": 0,
+  "port": 3000,
+  "hostname": "",
+  "folders": [],
+  "routes": [
+    {
+      "uuid": "20990392-771a-478b-afff-2c0288edde4e",
+      "type": "http",
+      "documentation": "",
+      "method": "get",
+      "endpoint": "api/inquiry/plate/:plate",
+      "responses": [
+        {
+          "uuid": "499af4f5-e665-457f-8ddb-179ef3f0da1f",
+          "body": "{\n  \"plate\": \"{{urlParam 'plate'}}\",\n  \"brand\": \"بوگاتی\",\n  \"model\": \"المنت\",\n  \"make_date\": \"Tue Jul 28 2020 02:03:22 GMT+0430 (Iran Daylight Time)\",\n  \"owner\": {\n    \"full_name\": \" هلیا گل محمدی \",\n    \"national_id\": \"0058662274\"\n  }\n}",
+          "latency": 1000,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        },
+        {
+          "uuid": "7aa5a09c-a8d4-4f6a-8ab9-d67675e249e2",
+          "body": "{\r\n  \"plate\": \"{{urlParam 'plate'}}\",\r\n  \"brand\": \"سایپا\",\r\n  \"model\": \"تیبا ۲\",\r\n  \"make_date\": \"Wed Dec 09 2020 11:16:40 GMT+0430\",\r\n  \"owner\": {\r\n    \"full_name\": \" علی اکبری \",\r\n    \"national_id\": \"2233445566\"\r\n  }\r\n}\r\n",
+          "latency": 1000,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false,
+          "crudKey": "id",
+          "callbacks": []
+        },
+        {
+          "uuid": "f1d59bf8-2c65-4515-a708-c7f5785da6a8",
+          "body": "{\r\n  \"plate\": \"{{urlParam 'plate'}}\",\r\n  \"brand\": \"ایران خودرو\",\r\n  \"model\": \"پژو ۲۰۶\",\r\n  \"make_date\": \"Mon Apr 15 2019 05:33:12 GMT+0430\",\r\n  \"owner\": {\r\n    \"full_name\": \" سارا محمودی \",\r\n    \"national_id\": \"1188995577\"\r\n  }\r\n}\r\n",
+          "latency": 1000,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false,
+          "crudKey": "id",
+          "callbacks": []
+        },
+        {
+          "uuid": "f498fe84-dd7c-4c97-8fdf-a877a1ff5c77",
+          "body": "{\r\n  \"plate\": \"{{urlParam 'plate'}}\",\r\n  \"brand\": \"کیا\",\r\n  \"model\": \"سراتو\",\r\n  \"make_date\": \"Mon Oct 01 2018 08:23:58 GMT+0430\",\r\n  \"owner\": {\r\n    \"full_name\": \" محمد رضایی \",\r\n    \"national_id\": \"5566778899\"\r\n  }\r\n}\r\n",
+          "latency": 1000,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false,
+          "crudKey": "id",
+          "callbacks": []
+        },
+        {
+          "uuid": "3db2e5ca-e7c1-4ec6-906e-2b492d43bab9",
+          "body": "{}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": "RANDOM",
+      "streamingMode": null,
+      "streamingInterval": 0
+    }
+  ],
+  "rootChildren": [
+    {
+      "type": "route",
+      "uuid": "20990392-771a-478b-afff-2c0288edde4e"
+    }
+  ],
+  "proxyMode": false,
+  "proxyHost": "",
+  "proxyRemovePrefix": false,
+  "tlsOptions": {
+    "enabled": false,
+    "type": "CERT",
+    "pfxPath": "",
+    "certPath": "",
+    "keyPath": "",
+    "caPath": "",
+    "passphrase": ""
+  },
+  "cors": true,
+  "headers": [
+    {
+      "key": "Content-Type",
+      "value": "application/json"
+    },
+    {
+      "key": "Access-Control-Allow-Origin",
+      "value": "*"
+    },
+    {
+      "key": "Access-Control-Allow-Methods",
+      "value": "GET,POST,PUT,PATCH,DELETE,HEAD,OPTIONS"
+    },
+    {
+      "key": "Access-Control-Allow-Headers",
+      "value": "Content-Type, Origin, Accept, Authorization, Content-Length, X-Requested-With"
+    }
+  ],
+  "proxyReqHeaders": [
+    {
+      "key": "",
+      "value": ""
+    }
+  ],
+  "proxyResHeaders": [
+    {
+      "key": "",
+      "value": ""
+    }
+  ],
+  "data": [
+    {
+      "uuid": "3cb11bbd-96bb-456c-8c64-0db18131d4e9",
+      "id": "alvl",
+      "name": "Users",
+      "documentation": "",
+      "value": "[\n  {{#repeat 50}}\n  {\n    \"id\": \"{{faker 'string.uuid'}}\",\n    \"username\": \"{{faker 'internet.userName'}}\"\n  }\n  {{/repeat}}\n]"
+    }
+  ],
+  "callbacks": []
+}

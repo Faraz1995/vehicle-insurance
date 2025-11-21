@@ -7,6 +7,7 @@ import CarInfoCard from './components/CarInfo'
 import { convertToEnglishNumber } from './utils'
 import CarInfoCardSkeleton from './components/CardInfoSkeleton'
 import toast from 'react-hot-toast'
+import Modal from './components/Modal'
 
 const pattern = /^\d{2}[\u0600-\u06FF]\d{3}-\d{2}$/
 
@@ -14,6 +15,8 @@ function App() {
   const [plate, setPlate] = useState<string>('')
   const [isLoading, setIsLoading] = useState(false)
   const [res, setRes] = useState<CarInfo | null>(null)
+
+  const [showHistoryModal, setShowHistoryModal] = useState(false)
 
   const isValid = pattern.test(plate)
 
@@ -44,6 +47,12 @@ function App() {
 
   return (
     <div className='flex flex-col p-4 gap-4 w-full h-full items-center justify-center border border-amber-500'>
+      <div
+        className='w-full flex justify-end cursor-pointer'
+        onClick={() => setShowHistoryModal(true)}
+      >
+        <p className='text-sm font-bold text-blue-400'>مشاهده تاریخچه جستجو</p>
+      </div>
       <div className='flex flex-col sm:flex-row items-center gap-2'>
         <div className='max-w-md'>
           <PlateInputs
@@ -74,6 +83,13 @@ function App() {
         </div>
       )}
       {isLoading && <CarInfoCardSkeleton />}
+      {showHistoryModal && (
+        <Modal title='مشاهده تاریخچه جستجو' closeModal={() => setShowHistoryModal(false)}>
+          <div className='flex flex-col gap-4'>
+            <p>faraz</p>
+          </div>
+        </Modal>
+      )}
     </div>
   )
 }
