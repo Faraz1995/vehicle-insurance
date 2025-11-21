@@ -1,9 +1,26 @@
 @import 'tailwindcss';
 
+@font-face {
+  font-family: iran;
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('/assets/fonts/font_bold.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: iran;
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/assets/fonts/font.woff2') format('woff2');
+}
+
 html,
 body {
   direction: rtl;
   min-height: 100vh;
+  font-family: iran;
 }
 #root {
   height: 100%;
