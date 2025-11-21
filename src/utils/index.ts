@@ -129,3 +129,8 @@ export const calculateInsuraceQuote = (makeYear: string | Date) => {
   }
   return Math.round(finalPrice / 1000) * 1000
 }
+
+export const formatPrice = (price: number | string) => {
+  const numberPrice = Number(price)
+  return numberPrice.toLocaleString()
+}

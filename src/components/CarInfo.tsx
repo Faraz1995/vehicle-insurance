@@ -1,6 +1,6 @@
 import React from 'react'
 import type { CarInfo } from '../utils/types'
-import { calculateInsuraceQuote, plateParser, toJalali } from '../utils'
+import { calculateInsuraceQuote, formatPrice, plateParser, toJalali } from '../utils'
 
 type CarInfoCardProps = {
   item: CarInfo
@@ -8,6 +8,7 @@ type CarInfoCardProps = {
 
 const CarInfoCard: React.FC<CarInfoCardProps> = ({ item }) => {
   const parsedPlate = plateParser(item.plate)
+  const insuranceQuotePrice = calculateInsuraceQuote(item.make_date)
   return (
     <div className='w-full max-w-md mx-auto bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden min-w-80  sm:min-w-lg'>
       <div className='p-6 space-y-5 w-full'>
@@ -51,9 +52,12 @@ const CarInfoCard: React.FC<CarInfoCardProps> = ({ item }) => {
 
         <div className='flex items-center justify-between pt-4'>
           <span className='text-gray-400 font-medium'> قیمت بیمه سالیانه</span>
-          <span className='font-mono text-lg' dir='ltr'>
-            {calculateInsuraceQuote(item.make_date)}
-          </span>
+          <div>
+            <span className='font-mono text-lg' dir='ltr'>
+              {formatPrice(insuranceQuotePrice)}
+            </span>
+            <span>ریال</span>
+          </div>
         </div>
       </div>
     </div>
