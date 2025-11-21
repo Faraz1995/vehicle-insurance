@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react'
+import { useRef } from 'react'
 import { FloatingInput } from './FloatingInput'
 
 type PlateInputsProps = {
@@ -12,57 +12,59 @@ export const PlateInputs = ({
   onChange,
   extraClassnames
 }: PlateInputsProps) => {
-  const [part1, setPart1] = useState(value.slice(0, 2))
-  const [part2, setPart2] = useState(value.slice(2, 3))
-  const [part3, setPart3] = useState(value.slice(3, 6))
-  const [part4, setPart4] = useState(value.slice(6, 8))
+  // Remove dash and derive parts directly from prop
+  const cleanValue = value.replace('-', '')
+  
+  const parts = {
+    part1: cleanValue.slice(0, 2),
+    part2: cleanValue.slice(2, 3),
+    part3: cleanValue.slice(3, 6),
+    part4: cleanValue.slice(6, 8)
+  }
 
   const ref1 = useRef<HTMLInputElement>(null)
   const ref2 = useRef<HTMLInputElement>(null)
   const ref3 = useRef<HTMLInputElement>(null)
   const ref4 = useRef<HTMLInputElement>(null)
 
-  // helper to update combined value
   const updateCombined = (p1: string, p2: string, p3: string, p4: string) => {
     const combined = `${p1}${p2}${p3}-${p4}`
     onChange(combined)
   }
 
-  const handlePartChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    partSetter: (val: string) => void,
-    maxLength: number,
-    nextRef?: React.RefObject<HTMLInputElement | null> | null,
-    prevRef?: React.RefObject<HTMLInputElement | null> | null,
-    filterRegex?: RegExp,
-    currentPart?: number
+  const partConfig = {
+  part1: { maxLength: 2, regex: /[^0-9]/g, nextRef: ref2 },
+  part2: { maxLength: 1, regex: /[^\u0627-\u06CC]/g, nextRef: ref3 },
+  part3: { maxLength: 3, regex: /[^0-9]/g, nextRef: ref4 },
+  part4: { maxLength: 2, regex: /[^0-9]/g, nextRef: null }
+}
+
+const handlePartChange = (
+  e: React.ChangeEvent<HTMLInputElement>,
+  partKey: keyof typeof parts
+) => {
+  const config = partConfig[partKey]
+  const val = e.target.value
+    .replace(config.regex, '')
+    .slice(0, config.maxLength)
+
+  const newParts = { ...parts, [partKey]: val }
+  updateCombined(newParts.part1, newParts.part2, newParts.part3, newParts.part4)
+
+  if (val.length === config.maxLength && config.nextRef?.current) {
+    config.nextRef.current.focus()
+  }
+}
+
+  const handleKeyDown = (
+    e: React.KeyboardEvent<HTMLInputElement>,
+    partKey: keyof typeof parts,
+    prevRef?: React.RefObject<HTMLInputElement | null> | null
   ) => {
-    let val = e.target.value
-    if (filterRegex) val = val.replace(filterRegex, '')
-    val = val.slice(0, maxLength)
-    partSetter(val)
-
-    // auto-focus next input
-    if (val.length === maxLength && nextRef?.current) {
-      nextRef.current.focus()
+    // Backspace to previous input when current input is empty
+    if (e.key === 'Backspace' && parts[partKey].length === 0 && prevRef?.current) {
+      prevRef.current.focus()
     }
-
-    // backspace to previous input
-    if (
-      e.nativeEvent instanceof KeyboardEvent &&
-      e.nativeEvent.key === 'Backspace' &&
-      val.length === 0
-    ) {
-      prevRef?.current?.focus()
-    }
-
-    // update combined plate
-    updateCombined(
-      currentPart === 1 ? val : part1,
-      currentPart === 2 ? val : part2,
-      currentPart === 3 ? val : part3,
-      currentPart === 4 ? val : part4
-    )
   }
 
   return (
@@ -70,8 +72,9 @@ export const PlateInputs = ({
       {/* 1st input: two digits */}
       <FloatingInput
         ref={ref1}
-        value={part1}
-        onChange={(e) => handlePartChange(e, setPart1, 2, ref2, undefined, /[^0-9]/g, 1)}
+        value={parts.part1}
+        onChange={(e) => handlePartChange(e, 'part1')}
+        onKeyDown={(e) => handleKeyDown(e, 'part1', undefined)}
         placeholder='00'
         maxLength={2}
       />
@@ -79,10 +82,9 @@ export const PlateInputs = ({
       {/* 2nd input: Persian letter */}
       <FloatingInput
         ref={ref2}
-        value={part2}
-        onChange={(e) =>
-          handlePartChange(e, setPart2, 1, ref3, ref1, /[^\u0627-\u06CC]/g, 2)
-        }
+        value={parts.part2}
+        onChange={(e) => handlePartChange(e, 'part2')}
+        onKeyDown={(e) => handleKeyDown(e, 'part2', ref1)}
         placeholder='الف'
         maxLength={1}
       />
@@ -90,8 +92,9 @@ export const PlateInputs = ({
       {/* 3rd input: three digits */}
       <FloatingInput
         ref={ref3}
-        value={part3}
-        onChange={(e) => handlePartChange(e, setPart3, 3, ref4, ref2, /[^0-9]/g, 3)}
+        value={parts.part3}
+        onChange={(e) => handlePartChange(e, 'part3')}
+        onKeyDown={(e) => handleKeyDown(e, 'part3', ref2)}
         placeholder='000'
         maxLength={3}
       />
@@ -99,8 +102,9 @@ export const PlateInputs = ({
       {/* 4th input: two digits */}
       <FloatingInput
         ref={ref4}
-        value={part4}
-        onChange={(e) => handlePartChange(e, setPart4, 2, undefined, ref3, /[^0-9]/g, 4)}
+        value={parts.part4}
+        onChange={(e) => handlePartChange(e, 'part4')}
+        onKeyDown={(e) => handleKeyDown(e, 'part4', ref3)}
         placeholder='00'
         maxLength={2}
       />

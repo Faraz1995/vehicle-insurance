@@ -4,6 +4,7 @@ import { cn } from '../utils'
 type FloatingInputProps = {
   value: string
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+  onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void
   disabled?: boolean
   inputMode?: React.HTMLAttributes<HTMLInputElement>['inputMode']
   label?: string
@@ -18,6 +19,7 @@ export const FloatingInput = forwardRef<HTMLInputElement, FloatingInputProps>(
     {
       value,
       onChange,
+      onKeyDown,
       disabled = false,
       inputMode = 'text',
       label,
@@ -50,6 +52,7 @@ export const FloatingInput = forwardRef<HTMLInputElement, FloatingInputProps>(
           type='text'
           value={value}
           onChange={onChange}
+          onKeyDown={onKeyDown}
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
           disabled={disabled}
