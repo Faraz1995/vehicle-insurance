@@ -8,7 +8,6 @@ type CarInfoCardProps = {
 
 const CarInfoCard: React.FC<CarInfoCardProps> = ({ item }) => {
   const parsedPlate = plateParser(item.plate)
-  console.log(parsedPlate)
   return (
     <div className='w-full max-w-md mx-auto bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden min-w-lg'>
       <div className='p-6 space-y-5 w-full'>

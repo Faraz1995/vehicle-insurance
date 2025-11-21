@@ -5,6 +5,7 @@ import axiosInstance from './utils/axios'
 import type { CarInfo } from './utils/types'
 import CarInfoCard from './components/CarInfo'
 import { convertToEnglishNumber } from './utils'
+import CarInfoCardSkeleton from './components/CardInfoSkeleton'
 
 function App() {
   const [plate, setPlate] = useState<string>('')
@@ -49,13 +50,18 @@ function App() {
           <p>جستجو</p>
         </Button>
       </div>
-      <div>
-        {res && Object.keys(res).length > 0 ? (
-          <CarInfoCard item={res} />
-        ) : (
-          <p>خودرویی با این پلاک یافت نشد</p>
-        )}
-      </div>
+      {res && (
+        <div>
+          {Object.keys(res).length > 0 ? (
+            <CarInfoCard item={res} />
+          ) : (
+            <p className='text-center text-lg text-gray-500 italic'>
+              خودرویی با این پلاک یافت نشد
+            </p>
+          )}
+        </div>
+      )}
+      {isLoading && <CarInfoCardSkeleton />}
     </div>
   )
 }
