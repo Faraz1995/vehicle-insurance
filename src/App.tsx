@@ -2,7 +2,7 @@ import { useState } from 'react'
 import Button from './components/Button'
 import { PlateInputs } from './components/PlateInput'
 import axiosInstance from './utils/axios'
-import type { CarInfo } from './utils/types'
+import type { CarInfo, HistoryInfo } from './utils/types'
 import CarInfoCard from './components/CarInfo'
 import { convertToEnglishNumber, getDataFromLS } from './utils'
 import CarInfoCardSkeleton from './components/CardInfoSkeleton'
@@ -30,19 +30,23 @@ function App() {
       setIsLoading(false)
       setPlate('')
       if (Object.keys(res.data).length > 0) {
+        const toBeSaved = {
+          plate,
+          owner_full_name: res.data.owner.full_name,
+          make_date: res.data.make_date
+        }
         const prevSearched = localStorage.getItem('oldPlateSearched')
         if (prevSearched) {
-          const prevSearchedData: CarInfo[] = JSON.parse(prevSearched)
+          const prevSearchedData: HistoryInfo[] = JSON.parse(prevSearched)
           const exists = prevSearchedData.some((item) => item.plate === plate)
-          console.log('existsss', exists)
           if (!exists) {
             localStorage.setItem(
               'oldPlateSearched',
-              JSON.stringify([...JSON.parse(prevSearched), res.data])
+              JSON.stringify([...JSON.parse(prevSearched), toBeSaved])
             )
           }
         } else {
-          localStorage.setItem('oldPlateSearched', JSON.stringify([res.data]))
+          localStorage.setItem('oldPlateSearched', JSON.stringify([toBeSaved]))
         }
       }
     } catch (e) {
@@ -52,11 +56,11 @@ function App() {
     }
   }
 
-  const historyData: CarInfo[] = getDataFromLS('oldPlateSearched')
+  const historyData: HistoryInfo[] = getDataFromLS('oldPlateSearched')
 
   return (
     <div className='flex flex-col p-4 gap-4 w-full h-full items-center justify-center border border-amber-500'>
-      {historyData.length > 0 && (
+      {historyData?.length > 0 && (
         <div
           className='w-full flex justify-end cursor-pointer'
           onClick={() => setShowHistoryModal(true)}

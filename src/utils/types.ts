@@ -8,3 +8,9 @@ export type CarInfo = {
     national_id: string
   }
 }
+
+export type HistoryInfo = {
+  plate: string
+  owner_full_name: string
+  make_date: string
+}
